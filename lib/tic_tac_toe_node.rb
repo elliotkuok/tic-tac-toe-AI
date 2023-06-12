@@ -11,11 +11,11 @@ class TicTacToeNode
   def losing_node?(evaluator)
     #if game is over, there are 3 scenarios: win, lose, tie
     if @board.over? 
-      if @board.winner == evaluator
+      if @board.winner.nil?
         return false
       elsif @board.winner != evaluator
         return true
-      elsif @board.winner.nil? 
+      elsif @board.winner == evaluator #check for better method
         return false
       end
     end
@@ -24,11 +24,7 @@ class TicTacToeNode
       all_losing_nodes = self.children.all? do |child|
         child.losing_node?(evaluator)
       end
-      no_winning_nodes = self.children.none? do |child|
-        child.winning_node?(evaluator)
-      end
-
-      all_losing_nodes || no_winning_nodes
+      
     # opponent is next; this is a losing node if 
     else
       opponent_wins = self.children.any? do |child|
